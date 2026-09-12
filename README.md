@@ -31,6 +31,7 @@ c-learning/
 ## 学习记录
 
 - [CSDN 通讯录学习复盘](https://blog.csdn.net/2601_95464512/article/details/164882007)
+- [CSDN LeetCode 88 学习笔记](https://blog.csdn.net/2601_95464512/article/details/165127484)
 - [Gitee 学习仓库](https://gitee.com/JJJax/jaxs-little-nest)
 
 本仓库由原 `c-contact-manager` 改名整理而来，保留原提交历史。各练习是学习版本，具体功能和限制见项目内的 README。
