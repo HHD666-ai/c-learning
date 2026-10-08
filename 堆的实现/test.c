@@ -24,6 +24,16 @@ int main()
     printf("\n");
 
     HeapDestroy(&hp);
+    int a[] = { 5, 3, 8, 1, 6 };
+
+    int n = sizeof(a) / sizeof(a[0]);
+
+    HeapSort(a, n);
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", a[i]);
+    }
 
     return 0;
 }

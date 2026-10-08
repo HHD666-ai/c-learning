@@ -15,3 +15,4 @@ HPDataType HeapTop(Heap* hp);
 
 int HeapSize(Heap* hp);
 int HeapEmpty(Heap* hp);
+void HeapSort(int *a,int n);
