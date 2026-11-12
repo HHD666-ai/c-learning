@@ -110,24 +110,39 @@ static void SortSwap(int* x, int* y)
 
 void QuickSort(int* a, int left, int right)
 {
-    if (left >= right)
-        return;
-    int key = left;
-    int L = left;
-    int R = right;
-    while (L < R)
+    while (left < right)
     {
-        /* With the left pivot, R must move first. */
-        while (L < R && a[R] >= a[key])
-            --R;
-        while (L < R && a[L] <= a[key])
-            ++L;
-        if (L < R)
-            SortSwap(&a[L], &a[R]);
+        int key = left;
+        int L = left;
+        int R = right;
+        while (L < R)
+        {
+            /* With the left pivot, R must move first. */
+            while (L < R && a[R] >= a[key])
+                --R;
+            while (L < R && a[L] <= a[key])
+                ++L;
+            if (L < R)
+                SortSwap(&a[L], &a[R]);
+        }
+        SortSwap(&a[key], &a[L]);
+
+        /* Recurse only into the smaller side to bound stack depth. */
+        if (L - left < right - L)
+        {
+            if (left < L)
+                QuickSort(a, left, L - 1);
+            if (L == right)
+                break;
+            left = L + 1;
+        }
+        else
+        {
+            if (L < right)
+                QuickSort(a, L + 1, right);
+            if (L == left)
+                break;
+            right = L - 1;
+        }
     }
-    SortSwap(&a[key], &a[L]);
-    QuickSort(a, left, L - 1);
-    /* Skip the empty right interval; avoid L+1 overflow. */
-    if (L < right)
-        QuickSort(a, L + 1, right);
 }

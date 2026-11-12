@@ -1,4 +1,5 @@
 #include "BinaryTree.h"
+#include "Queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 BTNode*BuyBTNode(int val){
@@ -19,6 +20,19 @@ BTNode*BuyBTNode(int val){
     BTNode* noded = BuyBTNode('d');
     BTNode* nodee = BuyBTNode('e');
     BTNode* nodef = BuyBTNode('f');
+
+    /* Nodes are not linked yet, so partial allocation can be freed directly. */
+    if (nodea == NULL || nodeb == NULL || nodec == NULL
+        || noded == NULL || nodee == NULL || nodef == NULL)
+    {
+        free(nodea);
+        free(nodeb);
+        free(nodec);
+        free(noded);
+        free(nodee);
+        free(nodef);
+        return NULL;
+    }
 
     nodea->left = nodeb;
     nodea->right = nodec;
@@ -74,4 +88,51 @@ BTNode*BuyBTNode(int val){
     DestroyTree(root->right);
 
     free(root);
+}
+
+int TreeLevelKSize(BTNode* root, int k)
+{
+    if (root == NULL || k < 1)
+        return 0;
+    if (k == 1)
+        return 1;
+    return TreeLevelKSize(root->left, k - 1)
+         + TreeLevelKSize(root->right, k - 1);
+}
+
+int TreeComplete(BTNode* root)
+{
+    Queue q;
+    QueueInit(&q);
+    int result = 1;
+    if (!QueuePush(&q, root))
+    {
+        result = -1;
+        goto cleanup;
+    }
+    while (!QueueEmpty(&q))
+    {
+        BTNode* node = QueueFront(&q);
+        QueuePop(&q);
+        if (node == NULL)
+            break;
+        /* NULL children must also enter the queue. */
+        if (!QueuePush(&q, node->left) || !QueuePush(&q, node->right))
+        {
+            result = -1;
+            goto cleanup;
+        }
+    }
+    while (!QueueEmpty(&q))
+    {
+        if (QueueFront(&q) != NULL)
+        {
+            result = 0;
+            break;
+        }
+        QueuePop(&q);
+    }
+cleanup:
+    QueueDestroy(&q);
+    return result;
 }

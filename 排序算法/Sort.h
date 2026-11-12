@@ -7,6 +7,7 @@ void ShellSort(int* a, int n);
 void SelectSort(int* a, int n);
 void HeapSort(int* a, int n);
 /* Inclusive interval [left, right]; left >= right is empty or singleton. */
+/* Recurse on the smaller partition; worst-case auxiliary stack is O(log n). */
 void QuickSort(int* a, int left, int right);
 
 #endif
